@@ -1,4 +1,4 @@
-TARGET = easyfind
+TARGET = btc
 NAME = $(TARGET)
 
 CC = c++
@@ -7,7 +7,7 @@ OBJ_DIR = obj
 SRC_DIR = src
 INC_DIR = includes
 
-SRC_FILES = main.cpp
+SRC_FILES = main.cpp BitcoinExchange.cpp
 
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS = $(SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
