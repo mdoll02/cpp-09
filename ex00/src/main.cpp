@@ -1,4 +1,14 @@
 #include "BitcoinExchange.hpp"
+#include <sstream>
+
+static bool valid_line(std::string &line) {
+	std::istringstream iss(line);
+	std::string datePart, ratePart, delim;
+
+	if (!(iss >> datePart >> delim >> ratePart) || delim != "|" || datePart.size() != 10)
+		return false;
+	return true;
+}
 
 int main(int argc, char **argv) {
 	if (argc != 2) {
@@ -8,12 +18,30 @@ int main(int argc, char **argv) {
 
 	std::cout << "getting rates for " << argv[1] << std::endl;
 	BitcoinExchange btc;
-	std::string file = argv[1];
-
 	try {
+		btc.read_data("data.csv");
 	} catch (std::exception &e) {
 		std::cerr << RED << "Error: " << R << e.what() << std::endl;
 		return 1;
+	}
+	std::ifstream file(argv[1]);
+	if (!file.is_open()) {
+		std::cerr << RED << "Error: " << R << "invalid file" << std::endl;
+		return 1;
+	}
+	std::string line;
+	bool first = true;
+	while (std::getline(file, line)) {
+		if (first && line == "date | value") {
+			first = false;
+			continue;
+		}
+		if (valid_line(line)) {
+			std::cout << line << std::endl;
+		}
+		else {
+			std::cerr << RED << "Error: " << R << "invalid line" << std::endl;
+		}
 	}
 	return 0;
 }

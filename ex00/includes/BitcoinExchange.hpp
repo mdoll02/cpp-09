@@ -14,9 +14,19 @@ public:
     BitcoinExchange& operator=(const BitcoinExchange& other);
     ~BitcoinExchange();
 
+	void read_data(std::string database);
+	double getPrice(std::string date);
+
+
 class InvalidFileException : public std::exception {
 public:
 	virtual const char* what() const throw();
 };
+
+class InvalidDataRateException : public std::exception {
+public:
+	virtual const char* what() const throw();
+};
 private:
+	std::map<std::string, double> _data;
 };
