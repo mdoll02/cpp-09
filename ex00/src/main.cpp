@@ -11,10 +11,6 @@ int main(int argc, char **argv) {
 	std::string file = argv[1];
 
 	try {
-		btc.fillDatabase();
-		btc.fillRates(file);
-		btc.printRates();
-		btc.calculateRates();
 	} catch (std::exception &e) {
 		std::cerr << RED << "Error: " << R << e.what() << std::endl;
 		return 1;
