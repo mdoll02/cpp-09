@@ -6,26 +6,30 @@ static bool valid_line(std::string &line, std::string &datePart, double &rate) {
 	std::string ratePart, delim;
 
 	datePart.clear();
-	if (!(iss >> datePart >> delim >> ratePart)) {
-		std::cerr << datePart << RED << " Error: " << R << "Bad Input" << std::endl;
-		return false;
-	} else if (delim != "|") {
-		std::cerr << datePart << RED << " Error: " << R << "Invalid delimiter" << std::endl;
-		return false;
-	} else if (datePart.size() != 10) {
-		std::cerr << datePart << RED << " Error: " << R << "Invalid Date" << std::endl;
+	if (!(iss >> datePart >> delim >> ratePart) || delim != "|" || datePart.size() != 10) {
+		std::cerr << datePart << RED << " Error: " << R;
+		if (delim != "|") {
+			std::cerr << "Invalid delimiter";
+		} else if (datePart.size() != 10) {
+			std::cerr << "Invalid Date";
+		} else {
+			std::cerr << "Bad Input";
+		}
+		std::cerr << std::endl;
 		return false;
 	}
 	char* endptr;
 	rate = std::strtod(ratePart.c_str(), &endptr);
-	if (*endptr != '\0') {
-		std::cerr << datePart << RED << " Error: " << R << "Invalid Rate" << std::endl;
-		return false;
-	} else if (rate < 0) {
-		std::cerr << datePart << RED << " Error: " << R << "Rate too small" << std::endl;
-		return false;
-	} else if (rate > 1000) {
-		std::cerr << datePart << RED << " Error: " << R << "Rate too big" << std::endl;
+	if (*endptr != '\0' || rate < 0 || rate > 1000) {
+		std::cerr << datePart << RED << " Error: " << R;
+		if (*endptr != '\0') {
+			std::cerr << "Invalid Rate";
+		} else if (rate < 0) {
+			std::cerr << "Rate too small";
+		} else {
+			std::cerr << "Rate too big";
+		}
+		std::cerr << std::endl;
 		return false;
 	}
 	return true;
