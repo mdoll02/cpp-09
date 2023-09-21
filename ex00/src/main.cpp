@@ -1,12 +1,33 @@
 #include "BitcoinExchange.hpp"
 #include <sstream>
 
-static bool valid_line(std::string &line) {
+static bool valid_line(std::string &line, std::string &datePart, double &rate) {
 	std::istringstream iss(line);
-	std::string datePart, ratePart, delim;
+	std::string ratePart, delim;
 
-	if (!(iss >> datePart >> delim >> ratePart) || delim != "|" || datePart.size() != 10)
+	datePart.clear();
+	if (!(iss >> datePart >> delim >> ratePart)) {
+		std::cerr << datePart << RED << " Error: " << R << "Bad Input" << std::endl;
 		return false;
+	} else if (delim != "|") {
+		std::cerr << datePart << RED << " Error: " << R << "Invalid delimiter" << std::endl;
+		return false;
+	} else if (datePart.size() != 10) {
+		std::cerr << datePart << RED << " Error: " << R << "Invalid Date" << std::endl;
+		return false;
+	}
+	char* endptr;
+	rate = std::strtod(ratePart.c_str(), &endptr);
+	if (*endptr != '\0') {
+		std::cerr << datePart << RED << " Error: " << R << "Invalid Rate" << std::endl;
+		return false;
+	} else if (rate < 0) {
+		std::cerr << datePart << RED << " Error: " << R << "Rate too small" << std::endl;
+		return false;
+	} else if (rate > 1000) {
+		std::cerr << datePart << RED << " Error: " << R << "Rate too big" << std::endl;
+		return false;
+	}
 	return true;
 }
 
@@ -31,16 +52,15 @@ int main(int argc, char **argv) {
 	}
 	std::string line;
 	bool first = true;
+	std::string datePart;
+	double rate = 0.0;
 	while (std::getline(file, line)) {
-		if (first && line == "date | value") {
+		if ((first && line == "date | value") || line.empty()) {
 			first = false;
 			continue;
 		}
-		if (valid_line(line)) {
-			std::cout << line << std::endl;
-		}
-		else {
-			std::cerr << RED << "Error: " << R << "invalid line" << std::endl;
+		if (valid_line(line, datePart, rate)) {
+			std::cout << line << " ==> " << rate * btc.getPrice(datePart) << std::endl;
 		}
 	}
 	return 0;
