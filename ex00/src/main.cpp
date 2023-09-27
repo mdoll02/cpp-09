@@ -69,11 +69,3 @@ int main(int argc, char **argv) {
 	}
 	return 0;
 }
-
-// TODO: input data = exchange rate for each day
-//		if date does not exist choose the next LOWER date
-//		if date is before the first date choose the first date or print error
-//		if date is after the last date choose the last date or print error
-//		if date is invalid or doesnt follow syntax print error
-
-//todo	print the exchange rate for the given date
