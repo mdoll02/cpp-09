@@ -1,21 +1,39 @@
 #include "BitcoinExchange.hpp"
 #include <sstream>
 
+static bool validDate(std::string &date) {
+	if (date.size() != 10) {
+		return false;
+	}
+	int year, month, day;
+	std::istringstream iss(date);
+	char delim;
+	if (!(iss >> year >> delim >> month >> delim >> day) || delim != '-') {
+		return false;
+	}
+	if (month < 1 || month > 12 || day < 1 || day > 31) {
+		return false;
+	}
+	return true;
+}
+
 static bool valid_line(std::string &line, std::string &datePart, double &rate) {
 	std::istringstream iss(line);
 	std::string ratePart, delim;
 
 	datePart.clear();
-	if (!(iss >> datePart >> delim >> ratePart) || delim != "|" || datePart.size() != 10) {
+	if (!(iss >> datePart >> delim >> ratePart) || delim != "|") {
 		std::cerr << datePart << RED << " Error: " << R;
 		if (delim != "|") {
 			std::cerr << "Invalid delimiter";
-		} else if (datePart.size() != 10) {
-			std::cerr << "Invalid Date";
 		} else {
 			std::cerr << "Bad Input";
 		}
 		std::cerr << std::endl;
+		return false;
+	}
+	if (!validDate(datePart)) {
+		std::cerr << datePart << RED << " Error: " << R << "Invalid Date" << std::endl;
 		return false;
 	}
 	char* endptr;
