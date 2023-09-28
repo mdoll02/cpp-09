@@ -30,8 +30,8 @@ void PmergeMe::fillContainer(T &container, char **args) {
 	int nb;
 	char *endptr;
 
-	for (int i = 1; args[i]; i++) {
-		nb = static_cast<int>(std::strtod(args[i], &endptr));
+	for (int i = 0; args[i]; i++) {
+		nb = static_cast<int>(strtod(args[i], &endptr));
 		container.push_back(nb);
 	}
 }

@@ -7,13 +7,13 @@ int main(int argc, char **argv) {
 		std::cerr << RED << "Error: " << R << "Invalid number of arguments" << std::endl;
 		return 1;
 	}
-	if (!PmergeMe::checkArgs(argv)) {
+	if (!PmergeMe::checkArgs(argv + 1)) {
 		return 1;
 	}
 	std::vector<int> vec;
 	std::deque<int> deq;
-	PmergeMe::fillContainer(vec, argv);
-	PmergeMe::fillContainer(deq, argv);
+	PmergeMe::fillContainer(vec, argv + 1);
+	PmergeMe::fillContainer(deq, argv + 1);
 	std::cout << GREEN << "Before sort: " << R;
 	PmergeMe::printContainer(vec);
 	long timeVec = PmergeMe::sort(vec);
