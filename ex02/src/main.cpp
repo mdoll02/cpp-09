@@ -16,8 +16,14 @@ int main(int argc, char **argv) {
 	PmergeMe::fillContainer(deq, argv + 1);
 	std::cout << GREEN << "Before sort: " << R;
 	PmergeMe::printContainer(vec);
-	long timeVec = PmergeMe::sort(vec);
-	long timeDeque = PmergeMe::sort(deq);
+	clock_t startVec = clock();
+	PmergeMe::sortVector(vec);
+	clock_t endVec = clock();
+	clock_t startDeque = clock();
+	PmergeMe::sortDeque(deq);
+	clock_t endDeque = clock();
+	double timeVec = static_cast<double>(endVec - startVec) / CLOCKS_PER_SEC * 1000000;
+	double timeDeque = static_cast<double>(endDeque - startDeque) / CLOCKS_PER_SEC * 1000000;
 	std::cout << "Time to process a range of " << vec.size() << " elements with std::vector<int>: " << timeVec << " us" << std::endl;
 	std::cout << "Time to process a range of " << vec.size() << " elements with std::deque<int>: " << timeDeque << " us" << std::endl;
 	std::cout << GREEN << "After sort: " << R;
