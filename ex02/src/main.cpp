@@ -2,10 +2,6 @@
 #include "PmergeMe.tpp"
 #include <deque>
 
-
-#include <algorithm>
-#include <random>
-
 int main(int argc, char **argv) {
 	if (argc == 1) {
 		std::cerr << RED << "Error: " << R << "Invalid number of arguments" << std::endl;
