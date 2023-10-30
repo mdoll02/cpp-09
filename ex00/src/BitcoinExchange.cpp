@@ -22,7 +22,7 @@ BitcoinExchange::~BitcoinExchange() {
 	//std::cout << "BitcoinExchange destructor called" << std::endl;
 }
 
-void BitcoinExchange::read_data(std::string database) {
+void BitcoinExchange::read_data(const char *database) {
 	std::ifstream file(database);
 	if (!file.is_open()) {
 		throw InvalidFileException();

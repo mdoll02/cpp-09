@@ -14,7 +14,7 @@ public:
     BitcoinExchange& operator=(const BitcoinExchange& other);
     ~BitcoinExchange();
 
-	void read_data(std::string database);
+	void read_data(const char *database);
 	double getPrice(std::string date);
 
 
