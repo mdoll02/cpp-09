@@ -11,13 +11,11 @@
 
 
 #ifndef K
-# define K 2
+# define K 4
 #endif
 
 class PmergeMe {
 public:
-    PmergeMe(const PmergeMe& other);
-    PmergeMe& operator=(const PmergeMe& other);
     ~PmergeMe();
 
 	static bool checkArgs(char **args);
@@ -27,7 +25,7 @@ public:
 	template<typename T>
 	static void printContainer(T &container);
 
-	static void sortVector(std::vector<int> &container);
+	static void sortVector(std::vector<int> &vector);
 
 	static void sortDeque(std::deque<int> &container);
 

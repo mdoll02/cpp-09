@@ -25,7 +25,11 @@ int main(int argc, char **argv) {
 	double timeVec = static_cast<double>(endVec - startVec) / CLOCKS_PER_SEC * 1000000;
 	double timeDeque = static_cast<double>(endDeque - startDeque) / CLOCKS_PER_SEC * 1000000;
 	std::cout << "Time to process a range of " << vec.size() << " elements with std::vector<int>: " << timeVec << " us" << std::endl;
-	std::cout << "Time to process a range of " << vec.size() << " elements with std::deque<int>: " << timeDeque << " us" << std::endl;
-	std::cout << GREEN << "After sort: " << R;
+	std::cout << "Time to process a range of " << deq.size() << " elements with std::deque<int>: " << timeDeque << " us" << std::endl;
+	std::cout << GREEN << "Vector after sort: " << R;
 	PmergeMe::printContainer(vec);
+	std::cout << GREEN << "Deque after sort: " << R;
+	PmergeMe::printContainer(deq);
 }
+
+// ./PmergeMe `jot -r 3000 1 100000 | tr '\n' ' '`
