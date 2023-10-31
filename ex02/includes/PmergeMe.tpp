@@ -30,3 +30,12 @@ void PmergeMe::fillContainer(T &container, char **args) {
 		container.push_back(nb);
 	}
 }
+
+template<typename T>
+bool PmergeMe::isSorted(T &container) {
+	for (typename T::iterator it = container.begin(); it != container.end() - 1; it++) {
+		if (*it > *(it + 1))
+			return false;
+	}
+	return true;
+}

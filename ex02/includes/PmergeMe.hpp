@@ -25,6 +25,9 @@ public:
 	template<typename T>
 	static void printContainer(T &container);
 
+	template<typename T>
+	static bool isSorted(T &container);
+
 	static void sortVector(std::vector<int> &vector);
 
 	static void sortDeque(std::deque<int> &container);
