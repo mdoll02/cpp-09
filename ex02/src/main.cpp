@@ -31,13 +31,13 @@ int main(int argc, char **argv) {
 	if (!PmergeMe::isSorted(vec))
 		std::cout << RED << "Vector is not sorted" << R << std::endl;
 	else
-		std::cout << GREEN << "Vector is sorted" << R << std::endl;
+		std::cout << GREEN << "... Vector is sorted ..." << R << std::endl;
 	std::cout << GREEN << "Deque after sort: " << R;
 	PmergeMe::printContainer(deq);
 	if (!PmergeMe::isSorted(deq))
 		std::cout << RED << "Deque is not sorted" << R << std::endl;
 	else
-		std::cout << GREEN << "Deque is sorted" << R << std::endl;
+		std::cout << GREEN << "... Deque is sorted ..." << R << std::endl;
 }
 
 // ./PmergeMe `jot -r 3000 1 100000 | tr '\n' ' '`
