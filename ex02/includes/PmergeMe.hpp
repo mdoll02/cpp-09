@@ -34,17 +34,17 @@ public:
 
 private:
 
-	static void mergeSortV(std::vector<int>::iterator begin, std::vector<int>::iterator end);
+	static void mergeSortV(int begin, int end, std::vector<int> &vector);
 
-	static void mergeV(std::vector<int>::iterator begin, std::vector<int>::iterator middle, std::vector<int>::iterator end);
+	static void mergeV(int begin, int mid, int end, std::vector<int> &vector);
 
-	static void insertionSortV(std::vector<int>::iterator begin, std::vector<int>::iterator end);
+	static void insertionSortV(int begin, int end, std::vector<int> &vector);
 
-	static void mergeSortD(std::deque<int>::iterator begin, std::deque<int>::iterator end);
+	static void mergeSortD(int begin, int end, std::deque<int> &deque);
 
-	static void mergeD(std::deque<int>::iterator begin, std::deque<int>::iterator middle, std::deque<int>::iterator end);
+	static void mergeD(int begin, int mid, int end, std::deque<int> &deque);
 
-	static void insertionSortD(std::deque<int>::iterator begin, std::deque<int>::iterator end);
+	static void insertionSortD(int begin, int end, std::deque<int> &deque);
 
 	PmergeMe();
 	PmergeMe(const PmergeMe& other);

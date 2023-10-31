@@ -27,116 +27,114 @@ bool PmergeMe::checkArgs(char **args) {
 	return true;
 }
 
-void PmergeMe::sortVector(std::vector<int> &container) {
-	mergeSortV(container.begin(), container.end());
+void	PmergeMe::sortVector(std::vector<int> &vector) {
+	mergeSortV(0, vector.size() - 1, vector);
 }
 
-void PmergeMe::sortDeque(std::deque<int> &container) {
-	mergeSortD(container.begin(), container.end());
+void	PmergeMe::sortDeque(std::deque<int> &deque) {
+	mergeSortD(0, deque.size() - 1, deque);
 }
 
-void PmergeMe::mergeSortV(std::vector<int>::iterator begin, std::vector<int>::iterator end) {
+void	PmergeMe::mergeSortV(int begin, int end, std::vector<int> &vector) {
 	if (end - begin > K) {
-		std::vector<int>::iterator middle = begin + (end - begin) / 2;
-		mergeSortV(begin, middle);
-		mergeSortV(middle, end);
-		mergeV(begin, middle, end);
+		int mid = (begin + end) / 2;
+		mergeSortV(begin, mid, vector);
+		mergeSortV(mid + 1, end, vector);
+		mergeV(begin, mid, end, vector);
 	}
 	else {
-		insertionSortV(begin, end);
+		insertionSortV(begin, end, vector);
 	}
 }
 
-void PmergeMe::mergeSortD(std::deque<int>::iterator begin, std::deque<int>::iterator end) {
+void	PmergeMe::mergeSortD(int begin, int end, std::deque<int> &deque) {
 	if (end - begin > K) {
-		std::deque<int>::iterator middle = begin + (end - begin) / 2;
-		mergeSortD(begin, middle);
-		mergeSortD(middle, end);
-		mergeD(begin, middle, end);
+		int mid = (begin + end) / 2;
+		mergeSortD(begin, mid, deque);
+		mergeSortD(mid + 1, end, deque);
+		mergeD(begin, mid, end, deque);
 	}
 	else {
-		insertionSortD(begin, end);
+		insertionSortD(begin, end, deque);
 	}
 }
 
-void PmergeMe::mergeV(std::vector<int>::iterator begin, std::vector<int>::iterator middle, std::vector<int>::iterator end) {
-	std::vector<int> tmp;
-	std::vector<int>::iterator it1 = begin;
-	std::vector<int>::iterator it2 = middle;
+void	PmergeMe::mergeV(int begin, int mid, int end, std::vector<int> &vector) {
+	int i;
+	int j;
+	int v1Length = mid - begin + 1;
+	int v2Length = end - mid;
+	std::vector<int> v1(v1Length), v2(v2Length);
 
-	while (it1 != middle && it2 != end) {
-		if (*it1 < *it2) {
-			tmp.push_back(*it1);
-			it1++;
+	for (i = 0; i < v1Length; ++i)
+		v1[i] = vector[begin + i];
+	for (i = 0; i < v2Length; ++i)
+		v2[i] = vector[mid + 1 + i];
+
+	i = 0;
+	j = 0;
+	int vectorIter = begin;
+	while(i < v1Length && j < v2Length) {
+		if (v1[i] <= v2[j])
+			vector[vectorIter] = v1[i++];
+		else
+			vector[vectorIter] = v2[j++];
+		++vectorIter;
+	}
+	while (i < v1Length)
+		vector[vectorIter++] = v1[i++];
+	while (j < v2Length)
+		vector[vectorIter++] = v2[j++];
+}
+
+void	PmergeMe::mergeD(int begin, int mid, int end, std::deque<int> &deque) {
+	int i;
+	int j;
+	int d1Length = mid - begin + 1;
+	int d2Length = end - mid;
+	std::deque<int> d1(d1Length), d2(d2Length);
+
+	for (i = 0; i < d1Length; ++i)
+		d1[i] = deque[begin + i];
+	for (i = 0; i < d2Length; ++i)
+		d2[i] = deque[mid + 1 + i];
+
+	i = 0;
+	j = 0;
+	int dequeIter = begin;
+	while(i < d1Length && j < d2Length) {
+		if (d1[i] <= d2[j])
+			deque[dequeIter] = d1[i++];
+		else
+			deque[dequeIter] = d2[j++];
+		++dequeIter;
+	}
+	while (i < d1Length)
+		deque[dequeIter++] = d1[i++];
+	while (j < d2Length)
+		deque[dequeIter++] = d2[j++];
+}
+
+void	PmergeMe::insertionSortV(int begin, int end, std::vector<int> &vector) {
+	for (int i = begin; i < end; i++) {
+		int j = i + 1;
+		int tmp = vector[j];
+		while (j > begin && vector[j - 1] > tmp) {
+			vector[j] = vector[j - 1];
+			--j;
 		}
-		else {
-			tmp.push_back(*it2);
-			it2++;
-		}
-	}
-	while (it1 != middle) {
-		tmp.push_back(*it1);
-		it1++;
-	}
-	while (it2 != end) {
-		tmp.push_back(*it2);
-		it2++;
-	}
-	for (std::vector<int>::iterator it = tmp.begin(); it != tmp.end(); it++) {
-		*begin = *it;
-		begin++;
+		vector[j] = tmp;
 	}
 }
 
-void PmergeMe::mergeD(std::deque<int>::iterator begin, std::deque<int>::iterator middle, std::deque<int>::iterator end) {
-	std::deque<int> tmp;
-	std::deque<int>::iterator it1 = begin;
-	std::deque<int>::iterator it2 = middle;
-
-	while (it1 != middle && it2 != end) {
-		if (*it1 < *it2) {
-			tmp.push_back(*it1);
-			it1++;
+void	PmergeMe::insertionSortD(int begin, int end, std::deque<int> &deque) {
+	for (int i = begin; i < end; i++) {
+		int j = i + 1;
+		int tmp = deque[j];
+		while (j > begin && deque[j - 1] > tmp) {
+			deque[j] = deque[j - 1];
+			--j;
 		}
-		else {
-			tmp.push_back(*it2);
-			it2++;
-		}
-	}
-	while (it1 != middle) {
-		tmp.push_back(*it1);
-		it1++;
-	}
-	while (it2 != end) {
-		tmp.push_back(*it2);
-		it2++;
-	}
-	for (std::deque<int>::iterator it = tmp.begin(); it != tmp.end(); it++) {
-		*begin = *it;
-		begin++;
-	}
-}
-
-void PmergeMe::insertionSortV(std::vector<int>::iterator begin, std::vector<int>::iterator end) {
-	for (std::vector<int>::iterator it = begin; it != end; it++) {
-		std::vector<int>::iterator it2 = it + 1;
-		int tmp = *it2;
-		while (it2 != begin && *(it2 - 1) > tmp) {
-			*it2 = *(it2 - 1);
-			it2--;
-		}
-		*it2 = tmp;
-	}
-}
-
-void PmergeMe::insertionSortD(std::deque<int>::iterator begin, std::deque<int>::iterator end) {
-	for (std::deque<int>::iterator it = begin; it != end; it++) {
-		std::deque<int>::iterator it2 = it + 1;
-		int tmp = *it2;
-		while (it2 != begin && *(it2 - 1) > tmp) {
-			*it2 = *(it2 - 1);
-			it2--;
-		}
-		*it2 = tmp;
+		deque[j] = tmp;
 	}
 }
