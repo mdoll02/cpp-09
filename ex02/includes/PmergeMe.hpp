@@ -47,4 +47,6 @@ private:
 	static void insertionSortD(std::deque<int>::iterator begin, std::deque<int>::iterator end);
 
 	PmergeMe();
+	PmergeMe(const PmergeMe& other);
+	PmergeMe& operator=(const PmergeMe& other);
 };
