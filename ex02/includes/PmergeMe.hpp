@@ -34,13 +34,13 @@ public:
 
 private:
 
-	static void mergeSortV(int begin, int end, std::vector<int> &vector);
+	static void sortV(int begin, int end, std::vector<int> &vector);
 
 	static void mergeV(int begin, int mid, int end, std::vector<int> &vector);
 
 	static void insertionSortV(int begin, int end, std::vector<int> &vector);
 
-	static void mergeSortD(int begin, int end, std::deque<int> &deque);
+	static void sortD(int begin, int end, std::deque<int> &deque);
 
 	static void mergeD(int begin, int mid, int end, std::deque<int> &deque);
 
